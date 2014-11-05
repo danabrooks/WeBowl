@@ -20,6 +20,7 @@
 		37604B5E1A093EBE001CA9F8 /* WeBowlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37604B5D1A093EBE001CA9F8 /* WeBowlTests.m */; };
 		37604B691A0940F0001CA9F8 /* bowlingball.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 37604B681A0940F0001CA9F8 /* bowlingball.jpeg */; };
 		37604B6D1A096330001CA9F8 /* bowlingball2.png in Resources */ = {isa = PBXBuildFile; fileRef = 37604B6C1A096330001CA9F8 /* bowlingball2.png */; };
+		376186901A0AB1D100445FF7 /* lane.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3761868F1A0AB1D100445FF7 /* lane.jpeg */; };
 		471080191A0A9EE500551452 /* BowlScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 471080181A0A9EE500551452 /* BowlScore.m */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		37604B5D1A093EBE001CA9F8 /* WeBowlTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeBowlTests.m; sourceTree = "<group>"; };
 		37604B681A0940F0001CA9F8 /* bowlingball.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bowlingball.jpeg; path = images/bowlingball.jpeg; sourceTree = "<group>"; };
 		37604B6C1A096330001CA9F8 /* bowlingball2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bowlingball2.png; path = images/bowlingball2.png; sourceTree = "<group>"; };
+		3761868F1A0AB1D100445FF7 /* lane.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lane.jpeg; path = images/lane.jpeg; sourceTree = "<group>"; };
 		471080181A0A9EE500551452 /* BowlScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlScore.m; sourceTree = "<group>"; };
 		471080401A0A9F3C00551452 /* BowlScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BowlScore.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,6 +155,7 @@
 		37604B671A0940DB001CA9F8 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3761868F1A0AB1D100445FF7 /* lane.jpeg */,
 				3739F7AC1A09C87600E4BC85 /* pin.jpeg */,
 				37604B6C1A096330001CA9F8 /* bowlingball2.png */,
 				37604B681A0940F0001CA9F8 /* bowlingball.jpeg */,
@@ -242,6 +245,7 @@
 			files = (
 				3739F7B01A09D33700E4BC85 /* strike.wav in Resources */,
 				37604B521A093EBE001CA9F8 /* LaunchScreen.xib in Resources */,
+				376186901A0AB1D100445FF7 /* lane.jpeg in Resources */,
 				37604B4F1A093EBE001CA9F8 /* Images.xcassets in Resources */,
 				37604B6D1A096330001CA9F8 /* bowlingball2.png in Resources */,
 				3739F7AD1A09C87600E4BC85 /* pin.jpeg in Resources */,
