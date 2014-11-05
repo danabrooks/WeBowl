@@ -35,21 +35,129 @@
     // This is an example of a functional test case.
     BowlScore* bs = [[BowlScore alloc] init];
     [bs bowl:1];
+    [bs bowl:0];
     [bs bowl:1];
+    [bs bowl:0];
     [bs bowl:1];
+    [bs bowl:0];
     [bs bowl:1];
+    [bs bowl:0];
     [bs bowl:1];
+    [bs bowl:0];
     [bs bowl:1];
+    [bs bowl:0];
     [bs bowl:1];
+    [bs bowl:0];
     [bs bowl:1];
+    [bs bowl:0];
+    [bs bowl:1];
+    [bs bowl:0];
+    [bs bowl:1];
+    [bs bowl:0];
     int score = [bs getCurrentScore];
 
-    XCTAssert((score == 8), @"Pass");
+    XCTAssertTrue((score == 10), @"Pass");
+}
+
+- (void)testScoreGameWithStartingStrike {
+    // This is an example of a functional test case.
+    BowlScore* bs = [[BowlScore alloc] init];
+    [bs bowl:10];
+    
+    [bs bowl:1];
+    [bs bowl:1];
+    
+    [bs bowl:1];
+    [bs bowl:0];
+    
+    [bs bowl:1];
+    [bs bowl:0];
+    
+    [bs bowl:1];
+    [bs bowl:0];
+    
+    [bs bowl:1];
+    [bs bowl:0];
+    
+    [bs bowl:1];
+    [bs bowl:0];
+    
+    [bs bowl:1];
+    [bs bowl:0];
+    
+    [bs bowl:1];
+    [bs bowl:0];
+    
+    [bs bowl:1];
+    [bs bowl:0];
+    int score = [bs getCurrentScore];
+    
+    XCTAssertTrue((score == 22), @"Pass");
+    //XCTAssertTrue((score == 99), @"Pass");
+    
+}
 
 
+- (void)testScoreGameWith2Spares {
+    // This is an example of a functional test case.
+    BowlScore* bs = [[BowlScore alloc] init];
+    [bs bowl:9];
+    [bs bowl:1];
+    
+    [bs bowl:5];
+    [bs bowl:0];
+    
+    [bs bowl:0];
+    [bs bowl:0];
+    
+    [bs bowl:0];
+    [bs bowl:0];
+    
+    [bs bowl:0];
+    [bs bowl:0];
+    
+    [bs bowl:0];
+    [bs bowl:0];
+    
+    [bs bowl:0];
+    [bs bowl:0];
+    
+    [bs bowl:0];
+    [bs bowl:0];
+    
+    [bs bowl:8];
+    [bs bowl:2];
+    
+    [bs bowl:2];
+    [bs bowl:0];
+    int score = [bs getCurrentScore];
+ 
+    XCTAssertTrue((score == 34), @"Pass");
+    //XCTAssertTrue((score == 99), @"Pass");
+    
+}
 
-
-    XCTAssert(YES, @"Pass");
+- (void)testScoreHeartBreak {
+    // This is an example of a functional test case.
+    BowlScore* bs = [[BowlScore alloc] init];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:10];
+    [bs bowl:9];
+    
+    int score = [bs getCurrentScore];
+    
+    XCTAssertTrue((score == 299), @"Pass");
+    //XCTAssertTrue((score == 99), @"Pass");
+    
 }
 
 - (void)testGetCurrentFrame {
