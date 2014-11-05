@@ -29,8 +29,8 @@ static const uint32_t pinCategory = 0x1 << 1;
     myLabel.fontSize = 65;
     myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
                                    CGRectGetMidY(self.frame));
-    // [self addChild:myLabel];
-
+    myLabel = [self myScoreBoard];
+    [self addChild:myLabel];
     
     SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"lane.jpeg"];
     bgImage.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
@@ -143,8 +143,11 @@ static const uint32_t pinCategory = 0x1 << 1;
 
 - (SKLabelNode *)myScoreBoard
 {
-    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
 
+    myLabel.fontSize = 20;
+    myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+                                   self.frame.size.height - 120);
     myLabel.text = @"[0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0 0]=0";
 
     return myLabel;
