@@ -20,6 +20,7 @@
 		37604B5E1A093EBE001CA9F8 /* WeBowlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37604B5D1A093EBE001CA9F8 /* WeBowlTests.m */; };
 		37604B691A0940F0001CA9F8 /* bowlingball.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 37604B681A0940F0001CA9F8 /* bowlingball.jpeg */; };
 		37604B6D1A096330001CA9F8 /* bowlingball2.png in Resources */ = {isa = PBXBuildFile; fileRef = 37604B6C1A096330001CA9F8 /* bowlingball2.png */; };
+		471080191A0A9EE500551452 /* BowlScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 471080181A0A9EE500551452 /* BowlScore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		37604B5D1A093EBE001CA9F8 /* WeBowlTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeBowlTests.m; sourceTree = "<group>"; };
 		37604B681A0940F0001CA9F8 /* bowlingball.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bowlingball.jpeg; path = images/bowlingball.jpeg; sourceTree = "<group>"; };
 		37604B6C1A096330001CA9F8 /* bowlingball2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bowlingball2.png; path = images/bowlingball2.png; sourceTree = "<group>"; };
+		471080181A0A9EE500551452 /* BowlScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlScore.m; sourceTree = "<group>"; };
+		471080401A0A9F3C00551452 /* BowlScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BowlScore.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,9 +115,11 @@
 				37604B481A093EBE001CA9F8 /* GameViewController.h */,
 				37604B491A093EBE001CA9F8 /* GameViewController.m */,
 				37604B4B1A093EBE001CA9F8 /* Main.storyboard */,
+				471080401A0A9F3C00551452 /* BowlScore.h */,
 				37604B4E1A093EBE001CA9F8 /* Images.xcassets */,
 				37604B501A093EBE001CA9F8 /* LaunchScreen.xib */,
 				37604B3C1A093EBE001CA9F8 /* Supporting Files */,
+				471080181A0A9EE500551452 /* BowlScore.m */,
 			);
 			path = WeBowl;
 			sourceTree = "<group>";
@@ -260,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				471080191A0A9EE500551452 /* BowlScore.m in Sources */,
 				37604B4A1A093EBE001CA9F8 /* GameViewController.m in Sources */,
 				37604B421A093EBE001CA9F8 /* AppDelegate.m in Sources */,
 				37604B451A093EBE001CA9F8 /* GameScene.m in Sources */,
