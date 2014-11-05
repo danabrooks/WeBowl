@@ -29,6 +29,8 @@ static const uint32_t pinCategory = 0x1 << 1;
     myLabel.fontSize = 65;
     myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
                                    CGRectGetMidY(self.frame));
+    // [self addChild:myLabel];
+
     
     SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"lane.jpeg"];
     bgImage.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
@@ -36,8 +38,6 @@ static const uint32_t pinCategory = 0x1 << 1;
     bgImage.xScale = 3.0;
     [self addChild:bgImage];
     
-    // Don't show label for now
-    // [self addChild:myLabel];
     
     ballSprite = [SKSpriteNode spriteNodeWithImageNamed:@"bowlingball2"];
     ballSprite.xScale = 0.5;
@@ -69,6 +69,7 @@ static const uint32_t pinCategory = 0x1 << 1;
 //    pinSprite.yScale = 0.2;
 //    pinSprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 200);
 //    [self addChild:pinSprite];
+    [self addChild: [self resetButtonNode]];
 }
 
 -(NSArray*)createPins {
@@ -142,6 +143,17 @@ static const uint32_t pinCategory = 0x1 << 1;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+    
+    // If reset button touched, reset
+    if ([node.name isEqualToString:@"resetButtonNode"]) {
+        NSLog(@"Reset");
+        [self initBall];
+        [self initPins];
+        return;
+    }
     
     // [self runAction:[SKAction playSoundFileNamed:@"strike.wav" waitForCompletion:NO]];
     [self runAction:[SKAction playSoundFileNamed:@"strike.wav" waitForCompletion:YES] completion:^(void) {
@@ -175,5 +187,48 @@ static const uint32_t pinCategory = 0x1 << 1;
     NSLog(@"Contact");
 }
 
+- (SKSpriteNode *)resetButtonNode {
+    SKSpriteNode *resetNode = [SKSpriteNode spriteNodeWithImageNamed:@"reset-button.jpeg"];
+    resetNode.position = CGPointMake(self.frame.size.width - resetNode.size.width, 200);
+    resetNode.xScale = .25;
+    resetNode.yScale = .25;
+    resetNode.name = @"resetButtonNode";//how the node is identified later
+    resetNode.zPosition = 1.0;
+    return resetNode;
+}
+
+-(void)initBall {
+    ballSprite = [SKSpriteNode spriteNodeWithImageNamed:@"bowlingball2"];
+    ballSprite.xScale = 0.5;
+    ballSprite.yScale = 0.5;
+    
+    // Add the ball
+    ballSprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 220);
+    NSLog(@"x = %f", [[UIScreen mainScreen] bounds].size.width / 2);
+    NSLog(@"bounds = %@", NSStringFromCGRect([[UIScreen mainScreen] bounds]));
+    
+#if 0
+    // Physics
+    ballSprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(ballSprite.size.width/2)-7];
+    ballSprite.physicsBody.usesPreciseCollisionDetection = YES;
+    ballSprite.physicsBody.categoryBitMask = ballCategory;
+    
+    ballSprite.physicsBody.collisionBitMask = ballCategory | pinCategory;
+    ballSprite.physicsBody.contactTestBitMask = ballCategory | pinCategory;
+#endif
+    
+    [self addChild:ballSprite];
+}
+
+-(void)initPins {
+    for (SKSpriteNode* s in pins) {
+        [s removeFromParent];
+    }
+    [self createPins];
+    for (SKSpriteNode* s in pins) {
+        [self addChild:s];
+    }
+
+}
 
 @end
