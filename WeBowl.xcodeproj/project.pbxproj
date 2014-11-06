@@ -120,10 +120,10 @@
 				37604B491A093EBE001CA9F8 /* GameViewController.m */,
 				37604B4B1A093EBE001CA9F8 /* Main.storyboard */,
 				471080401A0A9F3C00551452 /* BowlScore.h */,
+				471080181A0A9EE500551452 /* BowlScore.m */,
 				37604B4E1A093EBE001CA9F8 /* Images.xcassets */,
 				37604B501A093EBE001CA9F8 /* LaunchScreen.xib */,
 				37604B3C1A093EBE001CA9F8 /* Supporting Files */,
-				471080181A0A9EE500551452 /* BowlScore.m */,
 			);
 			path = WeBowl;
 			sourceTree = "<group>";
