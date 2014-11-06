@@ -18,7 +18,6 @@
 		37604B4F1A093EBE001CA9F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37604B4E1A093EBE001CA9F8 /* Images.xcassets */; };
 		37604B521A093EBE001CA9F8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37604B501A093EBE001CA9F8 /* LaunchScreen.xib */; };
 		37604B5E1A093EBE001CA9F8 /* WeBowlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37604B5D1A093EBE001CA9F8 /* WeBowlTests.m */; };
-		37604B691A0940F0001CA9F8 /* bowlingball.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 37604B681A0940F0001CA9F8 /* bowlingball.jpeg */; };
 		37604B6D1A096330001CA9F8 /* bowlingball2.png in Resources */ = {isa = PBXBuildFile; fileRef = 37604B6C1A096330001CA9F8 /* bowlingball2.png */; };
 		376186901A0AB1D100445FF7 /* lane.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3761868F1A0AB1D100445FF7 /* lane.jpeg */; };
 		37A728951A0AC1DF00E4A196 /* reset-button.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 37A728941A0AC1DF00E4A196 /* reset-button.jpeg */; };
@@ -54,7 +53,6 @@
 		37604B571A093EBE001CA9F8 /* WeBowlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeBowlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37604B5C1A093EBE001CA9F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37604B5D1A093EBE001CA9F8 /* WeBowlTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeBowlTests.m; sourceTree = "<group>"; };
-		37604B681A0940F0001CA9F8 /* bowlingball.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bowlingball.jpeg; path = images/bowlingball.jpeg; sourceTree = "<group>"; };
 		37604B6C1A096330001CA9F8 /* bowlingball2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bowlingball2.png; path = images/bowlingball2.png; sourceTree = "<group>"; };
 		3761868F1A0AB1D100445FF7 /* lane.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lane.jpeg; path = images/lane.jpeg; sourceTree = "<group>"; };
 		37A728941A0AC1DF00E4A196 /* reset-button.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "reset-button.jpeg"; path = "images/reset-button.jpeg"; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 				3761868F1A0AB1D100445FF7 /* lane.jpeg */,
 				3739F7AC1A09C87600E4BC85 /* pin.jpeg */,
 				37604B6C1A096330001CA9F8 /* bowlingball2.png */,
-				37604B681A0940F0001CA9F8 /* bowlingball.jpeg */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -252,7 +249,6 @@
 				37604B4F1A093EBE001CA9F8 /* Images.xcassets in Resources */,
 				37604B6D1A096330001CA9F8 /* bowlingball2.png in Resources */,
 				3739F7AD1A09C87600E4BC85 /* pin.jpeg in Resources */,
-				37604B691A0940F0001CA9F8 /* bowlingball.jpeg in Resources */,
 				37604B471A093EBE001CA9F8 /* GameScene.sks in Resources */,
 				37604B4D1A093EBE001CA9F8 /* Main.storyboard in Resources */,
 				37A728951A0AC1DF00E4A196 /* reset-button.jpeg in Resources */,

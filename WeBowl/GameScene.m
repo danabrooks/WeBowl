@@ -147,6 +147,9 @@ static const uint32_t pinCategory = 0x1 << 1;
     NSArray *pinsArray = [self getPinsKnockedDown:[self randomPinsDown]];
     NSLog(@"Pins knocked down = %@", pinsArray);
     [bowlScore bowl:(int)pinsArray.count];
+    NSLog(@"current score = %d", [bowlScore getCurrentScore]);
+    NSLog(@"last complete frame = %d", [bowlScore lastCompleteFrame]);
+    NSLog(@"frame score = %@", [bowlScore getFrameScore:1]);
 }
 
 
