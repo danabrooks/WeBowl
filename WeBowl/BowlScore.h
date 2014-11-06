@@ -10,8 +10,9 @@
 
 @interface BowlScore : NSObject
 -(int) getCurrentScore;
-//-(int) getFrameScore:(int) frame;
+-(id) getFrameScore:(int) frame;
 -(void) bowl: (int) num;
+-(int)lastCompleteFrame;
 
 @property (nonatomic, assign) NSMutableArray * rolls;
 

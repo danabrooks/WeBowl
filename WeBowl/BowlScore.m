@@ -19,6 +19,7 @@
     int rollIdx;
     int rollsInternal [20];
     int frames [10];
+    NSMutableArray * frameStat;
 }
 
 - (id)init
@@ -30,8 +31,7 @@
     for (int idx = 0; idx < 20; idx++)
         rollsInternal[idx] = 0;
     
-    //for (int idx = 0; idx < 10; idx++)
-     //   frameTotal[idx] = 0;
+    frameStat = [[NSMutableArray alloc] init] ;
 
     return self;
 }
@@ -41,18 +41,24 @@
     return currentScore;
 }
 
-/****
--(int) getFrameScore:(int) frame
+-(NSDictionary *) getFrameScore:(int) frame
 {
-    return frameTotal[frame];
+    if (frame <=0) return nil;
+    return frameStat[frame - 1];
 }
- ***/
 
+-(int)lastCompleteFrame
+{
+    return frameIdx;
+}
 
 -(void)bowl:(int)num
 {
+    NSDictionary *frameData;
     rollsInternal[rollIdx] = num;
     rollIdx++;
+    
+    frameStat = [[NSMutableArray alloc] init];
     
     BOOL firstRoll = YES;
     
@@ -64,7 +70,12 @@
         if (rollsInternal[idx] == 10)
         {
             currentScore += 10 + rollsInternal[idx+1] + rollsInternal[idx+2];
-            //frameTotal[frameIdx++] = currentScore;
+            frameData = [NSDictionary dictionaryWithObjectsAndKeys:
+                         [NSNumber numberWithInt:10],@"First Ball",
+                         [NSNumber numberWithInt:0],@"Second Ball",
+                         [NSNumber numberWithInt:currentScore],@"Current Score",
+                         nil];
+            [frameStat addObject:frameData];
             frameIdx++;
             if (frameIdx >= 10) idx = 99;
         }
@@ -72,7 +83,12 @@
         {
             currentScore += 10 + rollsInternal[idx+2];
             idx++;
-           //frameTotal[frameIdx++] = currentScore;
+            frameData = [NSDictionary dictionaryWithObjectsAndKeys:
+                         [NSNumber numberWithInt:rollsInternal[idx]],@"First Ball",
+                         [NSNumber numberWithInt:rollsInternal[idx+1]],@"Second Ball",
+                         [NSNumber numberWithInt:currentScore],@"Current Score",
+                         nil];
+            [frameStat addObject:frameData];
             frameIdx++;
             if (frameIdx >= 10) idx = 99;
         }
@@ -82,12 +98,23 @@
             if (firstRoll)
             {
                 firstRoll = NO;
-           //     frameTotal[frameIdx] = currentScore;
+                frameData = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithInt:rollsInternal[idx]],@"First Ball",
+                             [NSNumber numberWithInt:currentScore],@"Current Score",
+                             nil];
+                [frameStat addObject:frameData];
             }
             else
             {
+                frameData = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithInt:rollsInternal[idx-1]],@"First Ball",
+                             [NSNumber numberWithInt:rollsInternal[idx]],@"Second Ball",
+                             [NSNumber numberWithInt:currentScore],@"Current Score",
+                             nil];
+                [frameStat removeObjectAtIndex:frameIdx];
+                [frameStat addObject:frameData];
+
                 firstRoll = YES;
-          //      frameTotal[frameIdx++] = currentScore;
                 frameIdx++;
                 if (frameIdx >= 10) idx = 99;
             }
