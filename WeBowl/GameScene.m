@@ -126,19 +126,6 @@ static const uint32_t pinCategory = 0x1 << 1;
         return;
     }
     
-#if 0
-    // [self runAction:[SKAction playSoundFileNamed:@"strike.wav" waitForCompletion:NO]];
-    [self runAction:[SKAction playSoundFileNamed:@"strike.wav" waitForCompletion:YES] completion:^(void) {
-        NSLog(@"After the ball struck the pins");
-        [ballSprite removeFromParent];
-        [pins[9] removeFromParent];
-        [pins[3] removeFromParent];
-        [pins[6] removeFromParent];
-        [pins[2] removeFromParent];
-        
-    }];
-#endif
-
     // Play the sound
     [self runAction:[SKAction playSoundFileNamed:@"strike.wav" waitForCompletion:NO]];
 
@@ -157,10 +144,9 @@ static const uint32_t pinCategory = 0x1 << 1;
             [pins[2] removeFromParent];
     }];
 
-    NSArray *pins = [self getPinsKnockedDown:[self randomPinsDown]];
-    NSLog(@"Done moving");
-    
-    
+    NSArray *pinsArray = [self getPinsKnockedDown:[self randomPinsDown]];
+    NSLog(@"Pins knocked down = %@", pinsArray);
+    [bowlScore bowl:(int)pinsArray.count];
 }
 
 
@@ -171,6 +157,39 @@ static const uint32_t pinCategory = 0x1 << 1;
 - (void) didBeginContact:(SKPhysicsContact *)contact {
     NSLog(@"Contact");
 }
+
+#pragma mark - Knocked Down Pins Utilities
+
+-(int) randomPinsDown
+{
+    int r = 0;
+
+    while (r == 0) {
+        if (arc4random_uniform != NULL)
+            r = arc4random_uniform (10);
+    }
+
+    return r;
+}
+
+-(NSArray*)getPinsKnockedDown:(int) pinsDown
+{
+
+    NSMutableArray* p = [[NSMutableArray alloc] init];
+
+    NSLog(@"numberKnockedDown = %d", pinsDown);
+
+    int counter = 0;
+    while (counter < pinsDown) {
+        int pinKnockedDown = arc4random_uniform (10) + 1;
+        [p addObject:[NSNumber numberWithInt:pinKnockedDown]];
+        counter++;
+    }
+    
+    return p;
+}
+
+#pragma mark - UI Utilities
 
 - (SKSpriteNode *)resetButtonNode {
     SKSpriteNode *resetNode = [SKSpriteNode spriteNodeWithImageNamed:@"reset-button.jpeg"];
@@ -213,36 +232,7 @@ static const uint32_t pinCategory = 0x1 << 1;
     for (SKSpriteNode* s in pins) {
         [self addChild:s];
     }
-
-}
-
--(int) randomPinsDown
-{
-    int r = 0;
-
-    while (r == 0) {
-        if (arc4random_uniform != NULL)
-            r = arc4random_uniform (10);
-    }
-
-    return r;
-}
-
--(NSArray*)getPinsKnockedDown:(int) pinsDown
-{
-
-    NSMutableArray* p = [[NSMutableArray alloc] init];
-
-    NSLog(@"numberKnockedDown = %d", pinsDown);
-
-    int counter = 0;
-    while (counter < pinsDown) {
-        int pinKnockedDown = arc4random_uniform (10) + 1;
-        [p addObject:[NSNumber numberWithInt:pinKnockedDown]];
-        counter++;
-    }
     
-    return p;
 }
 
 @end
