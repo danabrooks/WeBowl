@@ -10,4 +10,7 @@
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate>
 
+-(int) randomPinsDown;
+-(NSArray*)getPinsKnockedDown:(int) pins;
+
 @end

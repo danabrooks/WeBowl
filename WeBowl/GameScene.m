@@ -10,6 +10,7 @@
 
 #import "GameScene.h"
 #import "BowlScore.h"
+#include <stdlib.h>
 
 #if 0
 static const uint32_t ballCategory = 0x1 << 0;
@@ -109,6 +110,8 @@ static const uint32_t pinCategory = 0x1 << 1;
     return myLabel;
 }
 
+
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
     UITouch *touch = [touches anyObject];
@@ -153,7 +156,8 @@ static const uint32_t pinCategory = 0x1 << 1;
             [pins[6] removeFromParent];
             [pins[2] removeFromParent];
     }];
-    [self getPinsKnockedDown];
+
+    NSArray *pins = [self getPinsKnockedDown:[self randomPinsDown]];
     NSLog(@"Done moving");
     
     
@@ -212,18 +216,30 @@ static const uint32_t pinCategory = 0x1 << 1;
 
 }
 
--(NSArray*)getPinsKnockedDown {
-    NSArray* p = [[NSArray alloc] init];
+-(int) randomPinsDown
+{
+    int r = 0;
 
-    int numberKnockedDown = (arc4random() % 10) + 1;
-    NSLog(@"numberKnockedDown = %d", numberKnockedDown);
-    if (numberKnockedDown != 10) {
+    while (r == 0) {
+        if (arc4random_uniform != NULL)
+            r = arc4random_uniform (10);
     }
-    else {
-        int counter = 0;
-        while (counter < numberKnockedDown) {
-            // int pinKnockedDown = (arc4random() % 10) + 1;
-        }
+
+    return r;
+}
+
+-(NSArray*)getPinsKnockedDown:(int) pinsDown
+{
+
+    NSMutableArray* p = [[NSMutableArray alloc] init];
+
+    NSLog(@"numberKnockedDown = %d", pinsDown);
+
+    int counter = 0;
+    while (counter < pinsDown) {
+        int pinKnockedDown = arc4random_uniform (10) + 1;
+        [p addObject:[NSNumber numberWithInt:pinKnockedDown]];
+        counter++;
     }
     
     return p;

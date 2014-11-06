@@ -32,7 +32,6 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
 
     // Configure the view.
     SKView * skView = (SKView *)self.view;
@@ -44,7 +43,10 @@
     // Create and configure the scene.
     GameScene *scene = [GameScene unarchiveFromFile:@"GameScene"];
     scene.scaleMode = SKSceneScaleModeAspectFill;
-    
+
+    [super viewDidLoad];
+
+
     // Present the scene.
     [skView presentScene:scene];
 }
