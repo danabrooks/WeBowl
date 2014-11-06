@@ -22,6 +22,7 @@ static const uint32_t pinCategory = 0x1 << 1;
     SKSpriteNode* pinSprite;
     NSArray* pins;
     BowlScore* bowlScore;
+    SKLabelNode* scoreboardLabel;
 }
 
 -(void)didMoveToView:(SKView *)view {
@@ -32,7 +33,7 @@ static const uint32_t pinCategory = 0x1 << 1;
     bowlScore = [[BowlScore alloc] init];
     
     // Add the scoreboard
-    SKLabelNode* scoreboardLabel = [self myScoreBoard];
+    scoreboardLabel = [self myScoreBoard];
     [self addChild:scoreboardLabel];
     
     // Setup the background image of the bowling lane
@@ -107,6 +108,19 @@ static const uint32_t pinCategory = 0x1 << 1;
                                    self.frame.size.height - 120);
     myLabel.text = @"[0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0 0]=0";
 
+    NSMutableString* tmpLabel = [[NSMutableString alloc] init];
+    int numFrames = [bowlScore lastCompleteFrame];
+    for (int i = 0; i < 10; i++) {
+        if (i < numFrames) {
+            NSDictionary* fr = [bowlScore getFrameScore:i + 1];
+            [tmpLabel appendFormat:@"[%@ %@] %@ ",
+                        fr[@"First Ball"], fr[@"Second Ball"], fr[@"Current Score"]];
+        }
+        else {
+            [tmpLabel appendFormat:@"[0 0] 0 "];
+        }
+    }
+    myLabel.text = tmpLabel;
     return myLabel;
 }
 
@@ -137,19 +151,22 @@ static const uint32_t pinCategory = 0x1 << 1;
                                             [SKAction moveTo:diff duration:3.0],
                                             [SKAction scaleBy:0.2 duration:3.0]
                                             ]] completion:^(void) {
-            [ballSprite removeFromParent];
-            [pins[9] removeFromParent];
-            [pins[3] removeFromParent];
-            [pins[6] removeFromParent];
-            [pins[2] removeFromParent];
+        [ballSprite removeFromParent];
+        [pins[9] removeFromParent];
+        [pins[3] removeFromParent];
+        [pins[6] removeFromParent];
+        [pins[2] removeFromParent];
+        NSArray *pinsArray = [self getPinsKnockedDown:[self randomPinsDown]];
+        NSLog(@"Pins knocked down = %@", pinsArray);
+        [bowlScore bowl:(int)pinsArray.count];
+        NSLog(@"current score = %d", [bowlScore getCurrentScore]);
+        NSLog(@"last complete frame = %d", [bowlScore lastCompleteFrame]);
+        NSLog(@"frame score = %@", [bowlScore getFrameScore:1]);
+        [scoreboardLabel removeFromParent];
+        scoreboardLabel = [self myScoreBoard];
+        [self addChild:scoreboardLabel];
     }];
 
-    NSArray *pinsArray = [self getPinsKnockedDown:[self randomPinsDown]];
-    NSLog(@"Pins knocked down = %@", pinsArray);
-    [bowlScore bowl:(int)pinsArray.count];
-    NSLog(@"current score = %d", [bowlScore getCurrentScore]);
-    NSLog(@"last complete frame = %d", [bowlScore lastCompleteFrame]);
-    NSLog(@"frame score = %@", [bowlScore getFrameScore:1]);
 }
 
 
