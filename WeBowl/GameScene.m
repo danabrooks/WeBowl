@@ -12,11 +12,6 @@
 #import "BowlScore.h"
 #include <stdlib.h>
 
-#if 0
-static const uint32_t ballCategory = 0x1 << 0;
-static const uint32_t pinCategory = 0x1 << 1;
-#endif
-
 @implementation GameScene {
     SKSpriteNode* ballSprite;
     SKSpriteNode* pinSprite;
@@ -25,11 +20,14 @@ static const uint32_t pinCategory = 0x1 << 1;
     SKLabelNode* scoreboardLabel;
 }
 
--(void)didMoveToView:(SKView *)view {
+static const uint32_t ballCategory = 0x1 << 0;
+static const uint32_t pinCategory = 0x1 << 1;
 
+-(void)didMoveToView:(SKView *)view {
     
     self.physicsWorld.contactDelegate = self;
-
+    self.physicsWorld.gravity = CGVectorMake(0, 0); // CGPointVectori(0, -1.0);
+    
     bowlScore = [[BowlScore alloc] init];
     
     // Add the scoreboard
@@ -43,60 +41,15 @@ static const uint32_t pinCategory = 0x1 << 1;
     bgImage.xScale = 3.0;
     [self addChild:bgImage];
     
-    
-    // Add the ball
-//    ballSprite = [SKSpriteNode spriteNodeWithImageNamed:@"bowlingball2"];
-//    ballSprite.xScale = 0.5;
-//    ballSprite.yScale = 0.5;
-//    ballSprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 220);
+    // Add the ball and pins
     [self initBall];
-    
-#if 0
-    // Physics
-    ballSprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(ballSprite.size.width/2)-7];
-    ballSprite.physicsBody.usesPreciseCollisionDetection = YES;
-    ballSprite.physicsBody.categoryBitMask = ballCategory;
-    
-    ballSprite.physicsBody.collisionBitMask = ballCategory | pinCategory;
-    ballSprite.physicsBody.contactTestBitMask = ballCategory | pinCategory;
-#endif
-    
-    // [self addChild:ballSprite];
-
     pins = [self createPins];
     for (SKSpriteNode* s in pins) {
         [self addChild:s];
     }
-    [self addChild: [self resetButtonNode]];
-}
 
--(NSArray*)createPins {
-    NSMutableArray* pinArray = [[NSMutableArray alloc] init];
-    int pinsPerRow[] = {1, 2, 3, 4};
-    
-    CGPoint firstPin = CGPointMake(CGRectGetMidX(self.frame) - 40, CGRectGetMidY(self.frame) + 50);
-    for (int i = 3; i >= 0; i--) {
-        CGPoint firstPinOnRow;
-        firstPinOnRow.x = firstPin.x - (((pinsPerRow[i] - 1) * 20) / 2);
-        firstPinOnRow.y = firstPin.y + (i * 5);
-        for (int j = 0; j < pinsPerRow[i]; j++) {
-            SKSpriteNode* sprite = [SKSpriteNode spriteNodeWithImageNamed:@"pin.jpeg"];
-            sprite.xScale = 0.2;
-            sprite.yScale = 0.2;
-            CGPoint pos;
-            pos.x = firstPinOnRow.x += 20;
-            pos.y = firstPinOnRow.y;
-            sprite.position = pos;
-#if 0
-            sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(sprite.size.width/2)-7];
-            sprite.physicsBody.usesPreciseCollisionDetection = YES;
-            sprite.physicsBody.categoryBitMask = pinCategory;
-#endif
-            [pinArray addObject:sprite];
-        }
-    }
-    
-    return pinArray;
+    // Add the reset button
+    [self addChild: [self resetButtonNode]];
 }
 
 - (SKLabelNode *)myScoreBoard
@@ -106,7 +59,6 @@ static const uint32_t pinCategory = 0x1 << 1;
     myLabel.fontSize = 20;
     myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
                                    self.frame.size.height - 120);
-    myLabel.text = @"[0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0]=0 [0, 0 0]=0";
 
     NSMutableString* tmpLabel = [[NSMutableString alloc] init];
     int numFrames = [bowlScore lastCompleteFrame];
@@ -151,6 +103,7 @@ static const uint32_t pinCategory = 0x1 << 1;
                                             [SKAction moveTo:diff duration:3.0],
                                             [SKAction scaleBy:0.2 duration:3.0]
                                             ]] completion:^(void) {
+#if 0
         [ballSprite removeFromParent];
         [pins[9] removeFromParent];
         [pins[3] removeFromParent];
@@ -165,6 +118,7 @@ static const uint32_t pinCategory = 0x1 << 1;
         [scoreboardLabel removeFromParent];
         scoreboardLabel = [self myScoreBoard];
         [self addChild:scoreboardLabel];
+#endif
     }];
 
 }
@@ -176,6 +130,20 @@ static const uint32_t pinCategory = 0x1 << 1;
 
 - (void) didBeginContact:(SKPhysicsContact *)contact {
     NSLog(@"Contact");
+    [ballSprite removeFromParent];
+    [pins[9] removeFromParent];
+    [pins[3] removeFromParent];
+    [pins[6] removeFromParent];
+    [pins[2] removeFromParent];
+    NSArray *pinsArray = [self getPinsKnockedDown:[self randomPinsDown]];
+    NSLog(@"Pins knocked down = %@", pinsArray);
+    [bowlScore bowl:(int)pinsArray.count];
+    NSLog(@"current score = %d", [bowlScore getCurrentScore]);
+    NSLog(@"last complete frame = %d", [bowlScore lastCompleteFrame]);
+    NSLog(@"frame score = %@", [bowlScore getFrameScore:1]);
+    [scoreboardLabel removeFromParent];
+    scoreboardLabel = [self myScoreBoard];
+    [self addChild:scoreboardLabel];
 }
 
 #pragma mark - Knocked Down Pins Utilities
@@ -222,24 +190,23 @@ static const uint32_t pinCategory = 0x1 << 1;
 }
 
 -(void)initBall {
-    ballSprite = [SKSpriteNode spriteNodeWithImageNamed:@"bowlingball2"];
+    ballSprite = [SKSpriteNode spriteNodeWithImageNamed:@"bowlingball"];
     ballSprite.xScale = 0.5;
     ballSprite.yScale = 0.5;
     
     // Add the ball
     ballSprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 220);
+    ballSprite.name = @"ball";
     NSLog(@"x = %f", [[UIScreen mainScreen] bounds].size.width / 2);
     NSLog(@"bounds = %@", NSStringFromCGRect([[UIScreen mainScreen] bounds]));
     
-#if 0
     // Physics
-    ballSprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(ballSprite.size.width/2)-7];
+    ballSprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(ballSprite.size.width/2)];
     ballSprite.physicsBody.usesPreciseCollisionDetection = YES;
     ballSprite.physicsBody.categoryBitMask = ballCategory;
-    
-    ballSprite.physicsBody.collisionBitMask = ballCategory | pinCategory;
-    ballSprite.physicsBody.contactTestBitMask = ballCategory | pinCategory;
-#endif
+    ballSprite.physicsBody.dynamic = YES;
+    ballSprite.physicsBody.collisionBitMask = pinCategory | ballCategory;
+    ballSprite.physicsBody.contactTestBitMask = pinCategory | ballCategory;
     
     [self addChild:ballSprite];
 }
@@ -253,6 +220,37 @@ static const uint32_t pinCategory = 0x1 << 1;
         [self addChild:s];
     }
     
+}
+
+-(NSArray*)createPins {
+    NSMutableArray* pinArray = [[NSMutableArray alloc] init];
+    int pinsPerRow[] = {1, 2, 3, 4};
+    
+    CGPoint firstPin = CGPointMake(CGRectGetMidX(self.frame) - 40, CGRectGetMidY(self.frame) + 50);
+    for (int i = 3; i >= 0; i--) {
+        CGPoint firstPinOnRow;
+        firstPinOnRow.x = firstPin.x - (((pinsPerRow[i] - 1) * 20) / 2);
+        firstPinOnRow.y = firstPin.y + (i * 5);
+        for (int j = 0; j < pinsPerRow[i]; j++) {
+            SKSpriteNode* sprite = [SKSpriteNode spriteNodeWithImageNamed:@"pin.jpeg"];
+            sprite.xScale = 0.2;
+            sprite.yScale = 0.2;
+            CGPoint pos;
+            pos.x = firstPinOnRow.x += 20;
+            pos.y = firstPinOnRow.y;
+            sprite.position = pos;
+            if (pinsPerRow[i] == 1) {
+                // sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(sprite.size.width/2)];
+                sprite.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sprite.size];
+                sprite.physicsBody.usesPreciseCollisionDetection = YES;
+                sprite.physicsBody.dynamic = YES;
+                sprite.physicsBody.categoryBitMask = pinCategory;
+            }
+            [pinArray addObject:sprite];
+        }
+    }
+    
+    return pinArray;
 }
 
 @end
